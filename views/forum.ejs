@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+    <%- include("../_partials/header") %>
+    <div class="forum-header">
+        <h2>Forumas</h2>
+    </div>
+    <!-- <h3><%= loggedUser %></h3> -->
+    <h5><%= loggedUserId %></h5>
+    <section class="comments-container">
+        <% for(let i = 0; i < comments.length; i++){ %>
+        <div class="comment">
+            <h3><%= comments[i].subject %></h3>
+            <div class="comment-body">
+                <p><%= comments[i].comment %></p>
+                <span>Posted by userID: <%= comments[i].userID %></span>
+            </div>
+        </div>
+        <% } %>
+    </section>
+    <form id="forumComment" action="/forum" method="POST">
+        <h3>Create new subject:</h3>
+        <input type="text" placeholder="subject" name="subject">
+        <textarea name="comment"  cols="30" rows="10" placeholder="your comment"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        var user = document.querySelector('h5');
+
+        window.localStorage.setItem('userID', user.innerHTML);
+    
+    </script>
+    <script src="javascripts/main.js"></script>
+    
+</body>
+</html>

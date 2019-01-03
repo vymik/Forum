@@ -1,0 +1,20 @@
+<header>
+    <div class="logo">
+        <h2>SuperMama</h2>
+    </div>
+    <div class="username">
+        
+    </div>
+    <div class="nav">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <% if(!loggedUser){ %>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                <% } %>
+                <li><a href="/forum">Forum</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>

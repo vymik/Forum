@@ -1,0 +1,91 @@
+*,
+*::before,
+*::after{
+	box-sizing: border-box;
+	/* border: 1px solid red; */
+}
+
+html{
+    font-size: 16px;
+}
+html,
+body {
+    margin: 0 auto;
+}
+
+a {
+  color: #00B7FF;
+}
+
+header {
+  width: 100%;
+  background-color: lightgray;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav,
+nav{
+  display: flex;
+  align-content: center;
+}
+
+ul {
+  display: flex;
+}
+ul li{
+  display: inline;
+  margin: auto;
+  padding: 10px;
+}
+
+.logo {
+  display: flex;
+}
+h2 {
+  padding: 15px;
+  margin: auto;
+}
+
+h5 {
+  display: none;
+}
+
+#forumComment {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  margin: 30px auto;
+  background-color: lightseagreen;
+  padding: 15px;
+}
+
+#forumComment input {
+  margin: 10px 0;
+}
+
+#forumComment button {
+  width: 100px;
+  margin: 10px auto;
+}
+
+.forum-header {
+  width: 100%;
+  background-color: rgb(187, 185, 185);
+}
+
+.comments-container {
+  margin: 0 auto;
+  width: 85%;
+  background-color: lightseagreen;
+}
+
+.comment {
+  border: 1px solid gray;
+  padding: 15px;
+}
+
+.comment-body {
+  border: 1px solid lightgray;
+  background-color: #fff;
+}
