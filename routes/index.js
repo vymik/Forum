@@ -13,19 +13,25 @@ router.get('/', function(req, res, next) {
 });
 
 router.get("/login", (req, res) => {
-  res.render("login");
+
+  res.render("login", {loggedUser: loggedUser, loggedUserId: loggedUserId });
 });
 
 router.get("/register", (req, res) => {
-  res.render("register");
+  res.render("register", {loggedUser: loggedUser, loggedUserId: loggedUserId });
 });
 
 router.get("/forum", (req, res) => {
   if(loggedUser){
-    let commentDB = fs.readFileSync("./database/posts.json");
-    let comments = JSON.parse(commentDB);
+    let subjectDB = fs.readFileSync("./database/posts.json");
+    let subjects = JSON.parse(subjectDB);
+
+    let messageDB = fs.readFileSync("./database/messages.json");
+    let messages = JSON.parse(messageDB);
+
+
   
-    res.render("forum", {loggedUser: loggedUser, loggedUserId: loggedUserId, comments: comments });
+    res.render("forum", {loggedUser: loggedUser, loggedUserId: loggedUserId, subjects: subjects, messages: messages });
   } else {
     res.render("login", {loggedUser: loggedUser, loggedUserId: loggedUserId });
   }
@@ -63,14 +69,46 @@ router.post("/login", (req,res) => {
 });
 
 router.post("/forum", (req,res) => {
-  let newComment = req.body;
-  let commentDB = fs.readFileSync("./database/posts.json");
-  let comments = JSON.parse(commentDB);
-  newComment.userID = loggedUserId;
+  let newSubject = req.body;
+  console.log(newSubject);
+  let subjectDB = fs.readFileSync("./database/posts.json");
+  let subjects = JSON.parse(subjectDB);
+  let subjectID = subjects.length;
+  newSubject.userID = loggedUserId;
+  newSubject.subjectID = subjectID + "";
 
-  comments.push(newComment);
-  fs.writeFileSync("./database/posts.json", JSON.stringify(comments));
+  subjects.push(newSubject);
+  fs.writeFileSync("./database/posts.json", JSON.stringify(subjects));
+
+  let newMessage = req.body;
+  let messageDB = fs.readFileSync("./database/messages.json");
+  let messages = JSON.parse(messageDB);
+  delete newMessage.subject;
+  newMessage.userID = loggedUserId;
+  newMessage.subjectID = subjectID + "";
+
+  messages.push(newMessage);
+  fs.writeFileSync("./database/messages.json", JSON.stringify(messages));
+
   res.redirect('/forum');
-})
+});
+
+router.post("/answer", (req,res) => {
+
+  let newMessage = req.body;
+  let messageDB = fs.readFileSync("./database/messages.json");
+  let messages = JSON.parse(messageDB);
+  newMessage.userID = loggedUserId;
+  console.log(newMessage);
+
+  if(newMessage.comment){
+    messages.push(newMessage);
+    fs.writeFileSync("./database/messages.json", JSON.stringify(messages));
+    res.redirect('/forum');
+  }
+  
+});
+
+
 
 module.exports = router;
