@@ -1,46 +1,50 @@
 var fs = require("fs");
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 let loggedUser;
 let loggedUserId;
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  let userDB  = fs.readFileSync("./database/users.json");
+router.get("/", function(req, res, next) {
+  let userDB = fs.readFileSync("./database/users.json");
   let users = JSON.parse(userDB);
 
-  res.render('index', {loggedUser: loggedUser, loggedUserId: loggedUserId });
+  res.render("index", { loggedUser: loggedUser, loggedUserId: loggedUserId });
 });
 
 router.get("/login", (req, res) => {
-
-  res.render("login", {loggedUser: loggedUser, loggedUserId: loggedUserId });
+  res.render("login", { loggedUser: loggedUser, loggedUserId: loggedUserId });
 });
 
 router.get("/register", (req, res) => {
-  res.render("register", {loggedUser: loggedUser, loggedUserId: loggedUserId });
+  res.render("register", {
+    loggedUser: loggedUser,
+    loggedUserId: loggedUserId
+  });
 });
 
 router.get("/forum", (req, res) => {
-  if(loggedUser){
+  if (loggedUser) {
     let subjectDB = fs.readFileSync("./database/posts.json");
     let subjects = JSON.parse(subjectDB);
 
     let messageDB = fs.readFileSync("./database/messages.json");
     let messages = JSON.parse(messageDB);
 
-
-  
-    res.render("forum", {loggedUser: loggedUser, loggedUserId: loggedUserId, subjects: subjects, messages: messages });
+    res.render("forum", {
+      loggedUser: loggedUser,
+      loggedUserId: loggedUserId,
+      subjects: subjects,
+      messages: messages
+    });
   } else {
-    res.render("login", {loggedUser: loggedUser, loggedUserId: loggedUserId });
+    res.render("login", { loggedUser: loggedUser, loggedUserId: loggedUserId });
   }
 });
 
-router.post("/register", (req,res) => {
-
+router.post("/register", (req, res) => {
   let newUser = req.body;
-  let userDB  = fs.readFileSync("./database/users.json");
+  let userDB = fs.readFileSync("./database/users.json");
   let users = JSON.parse(userDB);
   newUser.id = users.length;
 
@@ -50,25 +54,22 @@ router.post("/register", (req,res) => {
   res.redirect("/login");
 });
 
-
-router.post("/login", (req,res) => {
-
+router.post("/login", (req, res) => {
   let login = req.body;
-  let userDB  = fs.readFileSync("./database/users.json");
+  let userDB = fs.readFileSync("./database/users.json");
   let users = JSON.parse(userDB);
-  console.log("ivestis",login);
-  
-  for(let i = 0; i < users.length; i++){
-    if(users[i].name == login.name && users[i].psw == login.psw){
+  console.log("ivestis", login);
+
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].name == login.name && users[i].psw == login.psw) {
       loggedUser = users[i].name;
       loggedUserId = users[i].id;
       res.redirect("/forum");
-    } 
+    }
   }
-
 });
 
-router.post("/forum", (req,res) => {
+router.post("/forum", (req, res) => {
   let newSubject = req.body;
   console.log(newSubject);
   let subjectDB = fs.readFileSync("./database/posts.json");
@@ -90,25 +91,21 @@ router.post("/forum", (req,res) => {
   messages.push(newMessage);
   fs.writeFileSync("./database/messages.json", JSON.stringify(messages));
 
-  res.redirect('/forum');
+  res.redirect("/forum");
 });
 
-router.post("/answer", (req,res) => {
-
+router.post("/answer", (req, res) => {
   let newMessage = req.body;
   let messageDB = fs.readFileSync("./database/messages.json");
   let messages = JSON.parse(messageDB);
   newMessage.userID = loggedUserId;
   console.log(newMessage);
 
-  if(newMessage.comment){
+  if (newMessage.comment) {
     messages.push(newMessage);
     fs.writeFileSync("./database/messages.json", JSON.stringify(messages));
-    res.redirect('/forum');
+    res.redirect("/forum");
   }
-  
 });
-
-
 
 module.exports = router;

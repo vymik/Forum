@@ -1,20 +1,18 @@
 <header>
     <div class="logo">
-        <h2>SuperMama</h2>
-    </div>
-    <div class="username">
-        
+        <a href="/"><img src="https://www.freeiconspng.com/uploads/super-mom-mother-png-31.png" alt="logo" ></a>
     </div>
     <div class="nav">
         <nav>
             <ul>
-                <li><a href="/">Home</a></li>
                 <% if(!loggedUser){ %>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
+                    <li><a class="nav-button" href="/login">Login</a></li>
+                    <li><a class="nav-button" href="/register">Register</a></li>
                 <% } %>
-                <li><a href="/forum">Forum</a></li>
+                <li><a class="nav-button" href="/forum">Forum</a></li>
             </ul>
+            <div class="username">       
+            </div>
         </nav>
     </div>
 </header>
