@@ -24,10 +24,10 @@
                 <% } %>
                 <form action="/answer" method="POST" class="answerInput">
                     <input class="subjectIDinput hidden" type="text" name="subjectID" value="<%= i %>">
-                    <textarea class="answerArea hidden" name="comment" id="" cols="30" rows="4"></textarea>
-                    <button type="submit" class="answerSubmit hidden">Submit</button>
+                    <textarea class="answerArea hidden" name="comment" id="" cols="30" rows="4" placeholder="Enter your answer"></textarea>
+                    <button type="submit" class="answerSubmit button hidden">Submit</button>
                 </form>
-                <button class="answerButton">Answer</button>
+                <button class="answerButton button">Answer</button>
             </div>
             <% } %>
         </section>

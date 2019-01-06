@@ -186,3 +186,19 @@ span {
 .hidden {
   display: none;
 }
+
+.answerInput {
+  display: flex;
+  flex-direction: column;
+}
+
+.answerArea {
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+input,
+textarea {
+  border-radius: 5px;
+  padding: 5px;
+}

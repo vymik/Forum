@@ -8,11 +8,15 @@
                 <% if(!loggedUser){ %>
                     <li><a class="nav-button" href="/login">Login</a></li>
                     <li><a class="nav-button" href="/register">Register</a></li>
+                    <% } else { %>
+                    <li><a class="nav-button" href="/logout" class="logoutButton">Logout</a></li>    
                 <% } %>
                 <li><a class="nav-button" href="/forum">Forum</a></li>
             </ul>
+            <% if(loggedUserId){ %>
             <div class="username">       
             </div>
+            <% } %>
         </nav>
     </div>
 </header>

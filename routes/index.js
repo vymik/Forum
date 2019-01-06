@@ -48,10 +48,12 @@ router.post("/register", (req, res) => {
   let users = JSON.parse(userDB);
   newUser.id = users.length;
 
-  users.push(newUser);
-  console.log(newUser);
-  fs.writeFileSync("./database/users.json", JSON.stringify(users));
-  res.redirect("/login");
+  if(newUser.psw == newUser.pswrepeat){
+    users.push(newUser);
+    console.log(newUser);
+    fs.writeFileSync("./database/users.json", JSON.stringify(users));
+    res.redirect("/login");
+  }
 });
 
 router.post("/login", (req, res) => {
@@ -65,7 +67,7 @@ router.post("/login", (req, res) => {
       loggedUser = users[i].name;
       loggedUserId = users[i].id;
       res.redirect("/forum");
-    }
+    } 
   }
 });
 
@@ -106,6 +108,13 @@ router.post("/answer", (req, res) => {
     fs.writeFileSync("./database/messages.json", JSON.stringify(messages));
     res.redirect("/forum");
   }
+});
+
+router.get("/logout", (req,res) => {
+  loggedUser = null;
+  loggedUserId = null;
+  res.redirect("/");
+
 });
 
 module.exports = router;
